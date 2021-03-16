@@ -24,9 +24,9 @@ namespace SuperHeroDB.Controllers
         }
 
         // GET: CreateController/Details/5
-        public ActionResult Details(int heroIndex)
+        public ActionResult Details(int heroID)
         {
-            var hero = _context.SuperHeroes.Where(hero => hero.Id == heroIndex).SingleOrDefault();
+            var hero = _context.SuperHeroes.Where(h => h.Id == heroID).SingleOrDefault();
             return View(hero);
         }
 
@@ -54,18 +54,21 @@ namespace SuperHeroDB.Controllers
         }
 
         // GET: CreateController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int heroIndex)
         {
-            return View();
+            var hero = _context.SuperHeroes.Where(hero => hero.Id == heroIndex).SingleOrDefault();
+            return View(hero);
         }
 
         // POST: CreateController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(SuperHero hero)
         {
             try
             {
+                _context.SuperHeroes.Update(hero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -75,18 +78,21 @@ namespace SuperHeroDB.Controllers
         }
 
         // GET: CreateController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int heroIndex)
         {
-            return View();
+            var hero = _context.SuperHeroes.Where(hero => hero.Id == heroIndex).SingleOrDefault();
+            return View(hero);
         }
 
         // POST: CreateController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(SuperHero hero)
         {
             try
             {
+                _context.SuperHeroes.Remove(hero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
