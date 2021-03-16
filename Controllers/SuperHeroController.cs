@@ -4,21 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SuperHeroDB.Data;
+using SuperHeroDB.Models;
 
 namespace SuperHeroDB.Controllers
 {
-    public class CreateController : Controller
+    public class SuperHeroController : Controller
     {
+        private ApplicationDbContext _context;
+        public SuperHeroController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         // GET: CreateController
         public ActionResult Index()
         {
-            return View();
+            var heroes = _context.SuperHeroes;
+            return View(heroes);
         }
 
         // GET: CreateController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int heroIndex)
         {
-            return View();
+            var hero = _context.SuperHeroes.Where(hero => hero.Id == heroIndex).SingleOrDefault();
+            return View(hero);
         }
 
         // GET: CreateController/Create
@@ -30,10 +39,12 @@ namespace SuperHeroDB.Controllers
         // POST: CreateController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SuperHero hero)
         {
             try
             {
+                _context.SuperHeroes.Add(hero);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
