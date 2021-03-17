@@ -1,0 +1,15 @@
+﻿.left-banner {
+    position: absolute;
+    opacity: 0.5;
+    left:0;
+    width: 20%;
+    height: auto;
+}
+.right-banner {
+    position: absolute;
+    opacity: 0.5;
+    right: 0;
+    width: 20%;
+    height: auto;
+    transform: rotateY(180deg);
+}
