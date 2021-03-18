@@ -45,7 +45,7 @@ namespace SuperHeroDB.Controllers
             {
                 _context.SuperHeroes.Add(hero);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { heroId = hero.Id });
             }
             catch
             {
@@ -69,7 +69,7 @@ namespace SuperHeroDB.Controllers
             {
                 _context.SuperHeroes.Update(hero);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { heroId = hero.Id });
             }
             catch
             {
